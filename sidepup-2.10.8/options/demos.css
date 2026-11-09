@@ -1,0 +1,84 @@
+/* "See what Sidepup does": the live demo grid on the settings page */
+.showcase h2 { margin-bottom: 6px; }
+.showcase .sub { margin: 0 0 20px; color: var(--muted); font-size: 14px; max-width: 62ch; }
+.demos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 880px) { .demos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .demos { grid-template-columns: 1fr; } }
+
+.demo { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 14px; background: var(--raise); overflow: hidden; }
+.demo figcaption { padding: 13px 15px 15px; }
+.demo .n { font-family: var(--mono); font-size: 11px; letter-spacing: -.02em; color: var(--accent); }
+.demo h3 { margin: 2px 0 4px; font-size: 14.5px; font-weight: 500; letter-spacing: -.012em; }
+.demo p { margin: 0; font-size: 12.8px; line-height: 1.45; color: var(--muted); }
+
+/* the little stage each demo plays on */
+.m-stage { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #0F1219; isolation: isolate; user-select: none; }
+.m-stage, .m-stage * { pointer-events: none !important; }
+.m-stage::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: .9;
+  background:
+    linear-gradient(rgba(255,255,255,.07), rgba(255,255,255,.07)) 16px 18px / 38% 9px no-repeat,
+    linear-gradient(rgba(255,255,255,.04), rgba(255,255,255,.04)) 16px 36px / 64% 6px no-repeat,
+    linear-gradient(rgba(255,255,255,.04), rgba(255,255,255,.04)) 16px 49px / 54% 6px no-repeat,
+    linear-gradient(rgba(255,255,255,.04), rgba(255,255,255,.04)) 16px 62px / 60% 6px no-repeat,
+    linear-gradient(rgba(255,255,255,.05), rgba(255,255,255,.05)) calc(100% - 16px) 18px / 22% 54px no-repeat; }
+
+.m-dock { position: absolute; display: flex; flex-direction: column; align-items: flex-start; will-change: left, bottom; }
+.m-dogbox { position: relative; margin-bottom: -5px; flex: none; }
+.m-shelf { position: relative; z-index: 2; flex: none; overflow: hidden; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 5px;
+  background: linear-gradient(180deg, rgba(34,28,50,.55), rgba(24,20,36,.6));
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 8px 20px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.2);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  color: #F2EEF9; font: 500 11px/1 'Sidepup Mono', 'Geist Mono', ui-monospace, monospace; }
+.m-shelf.open { display: block; border-radius: 14px; }
+.m-time { color: #fff; letter-spacing: -.02em; font-variant-numeric: tabular-nums; text-shadow: 0 1px 3px rgba(20,14,34,.55); }
+.m-num { min-width: 15px; height: 15px; padding: 0 3px; border-radius: 50%; background: #fff; color: #3A2618; font-size: 9.5px; line-height: 15px; text-align: center; box-shadow: 0 1px 3px rgba(58,38,24,.2); }
+.m-dot { width: 7px; height: 7px; border-radius: 50%; background: #C98016; }
+.m-shelf [hidden] { display: none; }
+
+/* the open panel mock-up */
+.mp { padding: 6px 8px 8px; display: flex; flex-direction: column; gap: 6px; font: 400 10.5px/1.3 'Sidepup Sans', Geist, system-ui, sans-serif; color: #F2EEF9; }
+.mp-head { display: flex; align-items: center; justify-content: space-between; height: 16px; color: rgba(242,238,249,.75); }
+.mp-head .ic { width: 11px; height: 11px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.mp-head .r { display: flex; gap: 6px; align-items: center; }
+.mp-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 2px; border-radius: 7px; background: rgba(0,0,0,.26); }
+.mp-tabs span { text-align: center; padding: 3px 0; border-radius: 5px; color: rgba(242,238,249,.6); }
+.mp-tabs span.on { background: rgba(255,255,255,.16); color: #fff; }
+.mp-add { display: flex; gap: 4px; }
+.mp-in { height: 22px; padding: 0 6px; border-radius: 7px; border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.08); display: flex; align-items: center; white-space: nowrap; overflow: hidden; }
+.mp-in.grow { flex: 1; min-width: 0; }
+.mp-in.time { width: 52px; white-space: nowrap; justify-content: center; font-family: 'Sidepup Mono', 'Geist Mono', monospace; }
+.mp-in .ph { color: rgba(242,238,249,.45); }
+.mp-btn { width: 22px; height: 22px; flex: none; border-radius: 7px; background: linear-gradient(180deg, #C4B5F1, #A997E3); color: #261D3F; display: grid; place-items: center; font-size: 14px; line-height: 1; transition: transform .12s; }
+.mp-btn.press { transform: scale(.86); }
+.mp-list { display: flex; flex-direction: column; gap: 2px; }
+.mp-row { display: flex; align-items: center; gap: 6px; min-height: 20px; padding: 0 2px; border-radius: 6px; overflow: hidden; transition: max-height .25s, opacity .25s; max-height: 22px; }
+.mp-row.new { max-height: 0; opacity: 0; }
+.mp-row.new.in { max-height: 22px; opacity: 1; }
+.mp-chk { width: 12px; height: 12px; flex: none; border-radius: 50%; border: 1.5px solid rgba(242,238,249,.55); background: rgba(255,255,255,.06); display: grid; place-items: center; }
+.mp-row.done .mp-chk { background: #B9A7EE; border-color: #B9A7EE; }
+.mp-row.done .mp-chk::after { content: ""; width: 4px; height: 2.4px; border-left: 1.5px solid #261D3F; border-bottom: 1.5px solid #261D3F; transform: translateY(-.5px) rotate(-45deg); }
+.mp-row.done .tx { text-decoration: line-through; color: rgba(242,238,249,.5); }
+.mp-row .tx { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mp-chip { font-family: 'Sidepup Mono', 'Geist Mono', monospace; font-size: 9px; padding: 1px 4px; border-radius: 5px; background: rgba(255,255,255,.1); }
+
+/* a fake cursor, so every demo shows what you would do */
+.m-cursor { position: absolute; left: 0; top: 0; z-index: 9; width: 16px; height: 20px; opacity: 0; will-change: transform; filter: drop-shadow(0 2px 3px rgba(0,0,0,.4)); }
+.m-cursor svg { display: block; }
+.m-cursor i { position: absolute; left: -7px; top: -7px; width: 16px; height: 16px; border-radius: 50%; border: 2px solid #B9A7EE; opacity: 0; transform: scale(.4); }
+.m-cursor.down i { opacity: .9; transform: scale(1); transition: transform .18s, opacity .18s; }
+
+.m-chip { position: absolute; right: 10px; top: 10px; z-index: 5; padding: 4px 8px; border-radius: 999px; font: 500 10.5px/1 'Sidepup Mono', 'Geist Mono', monospace; letter-spacing: -.02em;
+  background: rgba(255,255,255,.1); color: #E9EDF5; border: 1px solid rgba(255,255,255,.14); }
+
+/* two windows for the sync demo */
+.m-wins { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 22px 12px 14px; align-items: center; }
+.m-win { border-radius: 10px; background: #171C27; border: 1px solid #2A3345; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,.35); }
+.m-win .bar { display: flex; align-items: center; gap: 4px; height: 17px; padding: 0 7px; background: #1E2535; font: 500 9.5px/1 'Sidepup Mono', 'Geist Mono', monospace; color: #98A4BA; }
+.m-win .bar b { width: 5px; height: 5px; border-radius: 50%; background: #3A4560; }
+.m-win .bar em { font-style: normal; margin-left: 4px; white-space: nowrap; }
+.m-win .mp { padding: 7px; }
+.m-link { position: absolute; left: 50%; top: 50%; z-index: 4; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; display: grid; place-items: center;
+  background: #0F1219; border: 1px solid #2A3345; color: #B9A7EE; opacity: .55; transition: opacity .2s, box-shadow .2s; }
+.m-link.on { opacity: 1; box-shadow: 0 0 0 4px rgba(185,167,238,.22); }
+.m-link svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }

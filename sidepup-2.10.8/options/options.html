@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sidepup settings</title>
+<link rel="stylesheet" href="options.css">
+<link rel="stylesheet" href="demos.css">
+</head>
+<body>
+<main>
+  <header class="top">
+    <div>
+      <h1>Sidepup settings</h1>
+      <p class="lede">A tiny golden retriever that sits wherever you park it. Your tasks, timer and settings follow you to any Chrome you are signed into.</p>
+    </div>
+    <p id="saved" class="saved" role="status" aria-live="polite"></p>
+  </header>
+
+  <p class="note">Just updated? Reload any tabs you already had open. Sidepup only appears on pages loaded since.</p>
+
+  <section class="card" aria-labelledby="h-you">
+    <h2 id="h-you">You and the shelf</h2>
+    <div class="grid">
+      <label class="field"><span>Your name <em>(optional, used in reminders)</em></span>
+        <input id="name" type="text" maxlength="40" autocomplete="given-name"></label>
+      <label class="field"><span>Dog size</span>
+        <select id="size"><option value="2.2">Small</option><option value="2.9">Medium</option><option value="3.6">Large</option></select></label>
+      <div class="field"><span>Where it sits</span>
+        <button id="recentre" class="ghost" type="button">Put it back bottom-right</button></div>
+      <label class="field"><span>A new day starts at</span>
+        <select id="dayResetHour"><option value="0">12:00 AM</option><option value="1">1:00 AM</option><option value="2">2:00 AM</option><option value="3">3:00 AM</option><option value="4">4:00 AM</option><option value="5">5:00 AM</option><option value="6">6:00 AM</option><option value="7">7:00 AM</option><option value="8">8:00 AM</option><option value="9">9:00 AM</option><option value="10">10:00 AM</option><option value="11">11:00 AM</option><option value="12">12:00 PM</option><option value="13">1:00 PM</option><option value="14">2:00 PM</option><option value="15">3:00 PM</option><option value="16">4:00 PM</option><option value="17">5:00 PM</option><option value="18">6:00 PM</option><option value="19">7:00 PM</option><option value="20">8:00 PM</option><option value="21">9:00 PM</option><option value="22">10:00 PM</option><option value="23">11:00 PM</option></select></label>
+    </div>
+    <p class="hint">A task with a time reminds you at that time. A task without one is yours to tick off. Either way the real deadline is the daily reset — anything still open then carries to the next day, marked “yesterday”, and Sidepup mentions it when you start.</p>
+    <p class="hint">Drag Sidepup by the dog or by the bar to park it anywhere on screen. Bring it up to an edge and it rests there. Keep pushing past the edge and it tucks away and peeps out — click it to bring it back. Wherever you leave it, it stays there on every page, and on your other computers once Chrome syncs.</p>
+  </section>
+
+  <section class="card" aria-labelledby="h-react">
+    <h2 id="h-react">How alive it is</h2>
+    <label class="check"><input id="eyes" type="checkbox"><span>Eyes follow your cursor</span></label>
+    <label class="check"><input id="playful" type="checkbox"><span>Playful reactions: zoomies, head rubs and typing along. Keys are only counted, never read.</span></label>
+    <label class="check"><input id="peekOnVideo" type="checkbox"><span>Peep from the bottom edge while a big video plays</span></label>
+    <label class="check"><input id="hideInShots" type="checkbox"><span>Hide Sidepup when I take a screenshot (Print Screen, Win+Shift+S, Cmd+Shift+3/4/5)</span></label>
+    <p class="hint" style="margin:2px 0 8px">Need it gone right now? Press <b>Alt+Shift+H</b> to hide Sidepup completely, and again to bring it back. You can change the shortcut at chrome://extensions/shortcuts. The task list is only ever on screen while the panel is open, and the panel closes by itself when you click away, switch window, or leave it for 20 seconds.</p>
+    <label class="check"><input id="notify" type="checkbox"><span>Also send system notifications</span></label>
+  </section>
+
+  <section class="card" aria-labelledby="h-rem">
+    <h2 id="h-rem">Reminders and focus</h2>
+    <div class="grid">
+      <div class="rem">
+        <label class="check"><input id="stretch-on" type="checkbox"><span>Stretch reminder</span></label>
+        <div class="field inline"><span>after (min) of work</span><input id="stretch-every" type="number" min="5" max="480">
+          <button id="try-stretch" class="ghost small" type="button">Try it</button></div>
+      </div>
+      <div class="rem">
+        <label class="check"><input id="water-on" type="checkbox"><span>Water reminder</span></label>
+        <div class="field inline"><span>after (min) of work</span><input id="water-every" type="number" min="5" max="480">
+          <button id="try-water" class="ghost small" type="button">Try it</button></div>
+      </div>
+    </div>
+    <div class="grid pair">
+      <label class="field"><span>Focus length (min)</span><input id="focusMin" type="number" min="1" max="180"></label>
+      <label class="field"><span>Break length (min)</span><input id="breakMin" type="number" min="1" max="60"></label>
+    </div>
+    <p class="hint">These count unbroken work, not clock time. The count only runs while you are at the keyboard, and 20 minutes away resets it — so three hours straight earns a nudge, while an hour followed by a proper break starts you from zero. Nothing interrupts a running focus block; anything due waits for the break.</p>
+    <p class="hint">“Try it” fires that reminder right now, so you can check it works without waiting. It appears on your open web pages, not on this settings tab.</p>
+  </section>
+
+  <section class="card" aria-labelledby="h-week">
+    <h2 id="h-week">Your week</h2>
+    <div id="tiles" class="tiles"></div>
+    <div class="charts">
+      <figure class="chart"><figcaption>Tasks done</figcaption><div id="ch-done" class="plot"></div></figure>
+      <figure class="chart"><figcaption>Time focused</figcaption><div id="ch-focus" class="plot"></div></figure>
+    </div>
+    <table id="week-table" class="sr"></table>
+    <p id="week-note" class="hint"></p>
+  </section>
+
+  <section class="card showcase" aria-labelledby="h-show">
+    <h2 id="h-show">See what Sidepup does</h2>
+    <p class="sub">A tiny golden retriever that keeps your day in order, and has a personality. Every clip below is the real thing, playing on a loop.</p>
+    <div id="demos" class="demos"></div>
+  </section>
+</main>
+<script src="../shared/core.js"></script>
+<script src="options.js"></script>
+<script src="../content/pup.js"></script>
+<script src="demos.js"></script>
+</body>
+</html>
